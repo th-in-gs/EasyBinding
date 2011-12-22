@@ -11,6 +11,7 @@
 @implementation ESBViewController
 @synthesize model = _model;
 - (void)dealloc {
+    [self unbindAll];
     [_model release],_model = nil;
     [_indicatorView release],_indicatorView = nil;
     [_imageView release],_imageView = nil;
