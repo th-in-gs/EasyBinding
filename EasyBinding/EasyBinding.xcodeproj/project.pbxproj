@@ -1,0 +1,268 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		18226BB114A2F57D00A4449C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18226BB014A2F57D00A4449C /* UIKit.framework */; };
+		18226BB314A2F57D00A4449C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18226BB214A2F57D00A4449C /* Foundation.framework */; };
+		18226BB514A2F57D00A4449C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18226BB414A2F57D00A4449C /* CoreGraphics.framework */; };
+		18226BBB14A2F57D00A4449C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18226BB914A2F57D00A4449C /* InfoPlist.strings */; };
+		18226BBD14A2F57D00A4449C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BBC14A2F57D00A4449C /* main.m */; };
+		18226BC114A2F57D00A4449C /* ESBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BC014A2F57D00A4449C /* ESBAppDelegate.m */; };
+		18226BC914A2F59200A4449C /* EasyBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BC814A2F59200A4449C /* EasyBinding.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		18226BAC14A2F57D00A4449C /* EasyBinding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyBinding.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18226BB014A2F57D00A4449C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		18226BB214A2F57D00A4449C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		18226BB414A2F57D00A4449C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		18226BB814A2F57D00A4449C /* EasyBinding-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EasyBinding-Info.plist"; sourceTree = "<group>"; };
+		18226BBA14A2F57D00A4449C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		18226BBC14A2F57D00A4449C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		18226BBE14A2F57D00A4449C /* EasyBinding-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EasyBinding-Prefix.pch"; sourceTree = "<group>"; };
+		18226BBF14A2F57D00A4449C /* ESBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESBAppDelegate.h; sourceTree = "<group>"; };
+		18226BC014A2F57D00A4449C /* ESBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ESBAppDelegate.m; sourceTree = "<group>"; };
+		18226BC714A2F59200A4449C /* EasyBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBinding.h; sourceTree = "<group>"; };
+		18226BC814A2F59200A4449C /* EasyBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyBinding.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18226BA914A2F57D00A4449C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18226BB114A2F57D00A4449C /* UIKit.framework in Frameworks */,
+				18226BB314A2F57D00A4449C /* Foundation.framework in Frameworks */,
+				18226BB514A2F57D00A4449C /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18226BA114A2F57D00A4449C = {
+			isa = PBXGroup;
+			children = (
+				18226BB614A2F57D00A4449C /* EasyBinding */,
+				18226BAF14A2F57D00A4449C /* Frameworks */,
+				18226BAD14A2F57D00A4449C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		18226BAD14A2F57D00A4449C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18226BAC14A2F57D00A4449C /* EasyBinding.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18226BAF14A2F57D00A4449C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18226BB014A2F57D00A4449C /* UIKit.framework */,
+				18226BB214A2F57D00A4449C /* Foundation.framework */,
+				18226BB414A2F57D00A4449C /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		18226BB614A2F57D00A4449C /* EasyBinding */ = {
+			isa = PBXGroup;
+			children = (
+				18226BC714A2F59200A4449C /* EasyBinding.h */,
+				18226BC814A2F59200A4449C /* EasyBinding.m */,
+				18226BBF14A2F57D00A4449C /* ESBAppDelegate.h */,
+				18226BC014A2F57D00A4449C /* ESBAppDelegate.m */,
+				18226BB714A2F57D00A4449C /* Supporting Files */,
+			);
+			path = EasyBinding;
+			sourceTree = "<group>";
+		};
+		18226BB714A2F57D00A4449C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				18226BB814A2F57D00A4449C /* EasyBinding-Info.plist */,
+				18226BB914A2F57D00A4449C /* InfoPlist.strings */,
+				18226BBC14A2F57D00A4449C /* main.m */,
+				18226BBE14A2F57D00A4449C /* EasyBinding-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18226BAB14A2F57D00A4449C /* EasyBinding */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18226BC414A2F57D00A4449C /* Build configuration list for PBXNativeTarget "EasyBinding" */;
+			buildPhases = (
+				18226BA814A2F57D00A4449C /* Sources */,
+				18226BA914A2F57D00A4449C /* Frameworks */,
+				18226BAA14A2F57D00A4449C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EasyBinding;
+			productName = EasyBinding;
+			productReference = 18226BAC14A2F57D00A4449C /* EasyBinding.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18226BA314A2F57D00A4449C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "深圳市中经饭否科技有限公司";
+			};
+			buildConfigurationList = 18226BA614A2F57D00A4449C /* Build configuration list for PBXProject "EasyBinding" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 18226BA114A2F57D00A4449C;
+			productRefGroup = 18226BAD14A2F57D00A4449C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18226BAB14A2F57D00A4449C /* EasyBinding */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		18226BAA14A2F57D00A4449C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18226BBB14A2F57D00A4449C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18226BA814A2F57D00A4449C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18226BBD14A2F57D00A4449C /* main.m in Sources */,
+				18226BC114A2F57D00A4449C /* ESBAppDelegate.m in Sources */,
+				18226BC914A2F59200A4449C /* EasyBinding.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		18226BB914A2F57D00A4449C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18226BBA14A2F57D00A4449C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		18226BC214A2F57D00A4449C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		18226BC314A2F57D00A4449C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		18226BC514A2F57D00A4449C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EasyBinding/EasyBinding-Prefix.pch";
+				INFOPLIST_FILE = "EasyBinding/EasyBinding-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		18226BC614A2F57D00A4449C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EasyBinding/EasyBinding-Prefix.pch";
+				INFOPLIST_FILE = "EasyBinding/EasyBinding-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18226BA614A2F57D00A4449C /* Build configuration list for PBXProject "EasyBinding" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18226BC214A2F57D00A4449C /* Debug */,
+				18226BC314A2F57D00A4449C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18226BC414A2F57D00A4449C /* Build configuration list for PBXNativeTarget "EasyBinding" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18226BC514A2F57D00A4449C /* Debug */,
+				18226BC614A2F57D00A4449C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18226BA314A2F57D00A4449C /* Project object */;
+}
