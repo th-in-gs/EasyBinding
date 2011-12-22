@@ -3,10 +3,11 @@
 //  EasyBinding
 //
 //  Created by easy on 11-12-22.
-//  Copyright (c) 2011年 深圳市中经饭否科技有限公司. All rights reserved.
+//  Copyright (c) 2011年 zeasy@qq.com All rights reserved.
 //
 
 #import "ESBAppDelegate.h"
+#import "ESBViewController.h"
 
 @implementation ESBAppDelegate
 
@@ -22,8 +23,11 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
+    self.window.rootViewController = [[[ESBViewController alloc] init] autorelease];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
     return YES;
 }
 

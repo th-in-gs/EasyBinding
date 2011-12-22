@@ -14,6 +14,7 @@
 		18226BBD14A2F57D00A4449C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BBC14A2F57D00A4449C /* main.m */; };
 		18226BC114A2F57D00A4449C /* ESBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BC014A2F57D00A4449C /* ESBAppDelegate.m */; };
 		18226BC914A2F59200A4449C /* EasyBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BC814A2F59200A4449C /* EasyBinding.m */; };
+		18226BD114A2F62C00A4449C /* ESBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BCF14A2F62C00A4449C /* ESBViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		18226BC014A2F57D00A4449C /* ESBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ESBAppDelegate.m; sourceTree = "<group>"; };
 		18226BC714A2F59200A4449C /* EasyBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasyBinding.h; sourceTree = "<group>"; };
 		18226BC814A2F59200A4449C /* EasyBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyBinding.m; sourceTree = "<group>"; };
+		18226BCE14A2F62C00A4449C /* ESBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESBViewController.h; sourceTree = "<group>"; };
+		18226BCF14A2F62C00A4449C /* ESBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESBViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 				18226BBF14A2F57D00A4449C /* ESBAppDelegate.h */,
 				18226BC014A2F57D00A4449C /* ESBAppDelegate.m */,
 				18226BB714A2F57D00A4449C /* Supporting Files */,
+				18226BCE14A2F62C00A4449C /* ESBViewController.h */,
+				18226BCF14A2F62C00A4449C /* ESBViewController.m */,
 			);
 			path = EasyBinding;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 				18226BBD14A2F57D00A4449C /* main.m in Sources */,
 				18226BC114A2F57D00A4449C /* ESBAppDelegate.m in Sources */,
 				18226BC914A2F59200A4449C /* EasyBinding.m in Sources */,
+				18226BD114A2F62C00A4449C /* ESBViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +267,7 @@
 				18226BC614A2F57D00A4449C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
