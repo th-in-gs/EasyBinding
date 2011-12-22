@@ -229,7 +229,6 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 		return;
 	}
 
-    [object retain];        //bad source
 	for (id<ESBChangeTransformer> transformer in self.transformers) {
 		if ([self.binder bindObject] != nil && self.boundObject != nil && self.boundKeyPath != nil) {
 			[transformer transform:[self.binder bindObject] 
@@ -238,7 +237,6 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 						forKeyPath:self.boundKeyPath];
 		}
 	}
-    [object autorelease];
 }
 
 @end
