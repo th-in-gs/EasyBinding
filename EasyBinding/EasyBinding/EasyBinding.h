@@ -11,8 +11,8 @@
 @protocol ESBChangeInfo <NSObject>
 @required
 -(NSKeyValueChange) kind;
--(id) oldValue;
--(id) newValue;
+-(id) valueOld;
+-(id) valueNew;
 -(NSIndexSet *) indexes;
 @end
 
