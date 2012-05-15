@@ -126,7 +126,7 @@
 		18226BA314A2F57D00A4449C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "深圳市中经饭否科技有限公司";
 			};
 			buildConfigurationList = 18226BA614A2F57D00A4449C /* Build configuration list for PBXProject "EasyBinding" */;

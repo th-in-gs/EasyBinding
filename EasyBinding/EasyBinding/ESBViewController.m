@@ -55,7 +55,7 @@
 
 -(void) modelLoadedChanged:(id<ESBChangeInfo>) changeInfo {
     if ([changeInfo kind] == NSKeyValueChangeSetting) {
-        if ([[changeInfo newValue] boolValue]) {
+        if ([[changeInfo valueNew] boolValue]) {
             [_indicatorView stopAnimating];
         } else {
             [_indicatorView startAnimating];
@@ -70,7 +70,7 @@
 }
 -(void) modelImageChanged:(id<ESBChangeInfo>) changeInfo {
     if ([changeInfo kind] == NSKeyValueChangeSetting) {
-        UIImage *image = (UIImage *) [changeInfo newValue];
+        UIImage *image = (UIImage *) [changeInfo valueNew];
         if (image != nil) {
             [self performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:[NSThread isMainThread]];
         }

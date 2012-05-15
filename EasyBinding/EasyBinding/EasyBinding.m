@@ -1,10 +1,31 @@
-//
-//  EasyBinding.m
-//  EasyBinding
-//
-//  Created by easy on 11-11-16.
-//  Copyright (c) zeasy@qq.com. All rights reserved.
-//
+/*
+ Copyright (c) 2011, copyright z.easy zeasy@qq.com
+ All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met: 
+ 
+ 1. Redistributions of source code must retain the above copyright notice, this
+ list of conditions and the following disclaimer. 
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+ this list of conditions and the following disclaimer in the documentation
+ and/or other materials provided with the distribution. 
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ The views and conclusions contained in the software and documentation are those
+ of the authors and should not be interpreted as representing official policies, 
+ either expressed or implied, of the FreeBSD Project.
+ */
 
 #import "EasyBinding.h"
 
@@ -95,37 +116,37 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 
 @interface ESBChangeInfo : NSObject <ESBChangeInfo>{
 	NSKeyValueChange kind_;
-	id oldValue_;
-	id newValue_;
+	id valueOld_;
+	id valueNew_;
 	NSIndexSet *indexes_;
 }
 @property (nonatomic, readonly) NSKeyValueChange kind;
-@property (nonatomic, retain, readonly) id oldValue;
-@property (nonatomic, retain, readonly) id newValue;
+@property (nonatomic, retain, readonly) id valueOld;
+@property (nonatomic, retain, readonly) id valueNew;
 @property (nonatomic, retain, readonly) NSIndexSet *indexes;
--(id) initWithKind:(NSKeyValueChange) kind oldValue:(id) oldValue newValue:(id) newValue indexes:(NSIndexSet *) indexes;
+-(id) initWithKind:(NSKeyValueChange) kind valueOld:(id) valueOld valueNew:(id) valueNew indexes:(NSIndexSet *) indexes;
 +(id) infoWithChange:(NSDictionary *) change;
 @end
 
 @implementation ESBChangeInfo
 @synthesize kind = kind_;
-@synthesize oldValue = oldValue_;
-@synthesize newValue = newValue_;
+@synthesize valueOld = valueOld_;
+@synthesize valueNew = valueNew_;
 @synthesize indexes = indexes_;
 
 -(NSString *) description{
-	return [NSString stringWithFormat:@"(oldValue:%@,newValue:%@,indexes:%@,kind:%d)",
-			[self oldValue],[self newValue],[self indexes],[self kind]];
+	return [NSString stringWithFormat:@"(valueOld:%@,valueNew:%@,indexes:%@,kind:%d)",
+			[self valueOld],[self valueNew],[self indexes],[self kind]];
 }
 
 -(void) dealloc{
-	[self->oldValue_ release],self->oldValue_ = nil;
-	[self->newValue_ release],self->newValue_ = nil;
+	[self->valueOld_ release],self->valueOld_ = nil;
+	[self->valueNew_ release],self->valueNew_ = nil;
 	[self->indexes_ release], self->indexes_ = nil;
 	[super dealloc];
 }
 
--(id) initWithKind:(NSKeyValueChange) kind oldValue:(id) oldValue newValue:(id) newValue indexes:(NSIndexSet *) indexes{
+-(id) initWithKind:(NSKeyValueChange) kind valueOld:(id) valueOld valueNew:(id) valueNew indexes:(NSIndexSet *) indexes{
 	self = [super init];
 	if (self != nil) {
 		if (kind < NSKeyValueChangeSetting || kind > NSKeyValueChangeReplacement) {
@@ -133,8 +154,8 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 			self = nil;
 		}else {
 			self->kind_ = kind;
-			self->oldValue_ = [oldValue retain];
-			self->newValue_ = [newValue retain];
+			self->valueOld_ = [valueOld retain];
+			self->valueNew_ = [valueNew retain];
 			self->indexes_ = [indexes retain];
 		}
 	}
@@ -145,17 +166,17 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 		return nil;
 	}
 	NSKeyValueChange kind = [[change objectForKey:NSKeyValueChangeKindKey] unsignedIntegerValue];
-	id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
-	if (oldValue == [NSNull null]) {	//change at 11.11.04
-		oldValue = nil;
+	id valueOld = [change objectForKey:NSKeyValueChangeOldKey];
+	if (valueOld == [NSNull null]) {	//change at 11.11.04
+		valueOld = nil;
 	}
-	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
-	if (newValue == [NSNull null]) {	//change at 11.11.04
-		newValue = nil;
+	id valueNew = [change objectForKey:NSKeyValueChangeNewKey];
+	if (valueNew == [NSNull null]) {	//change at 11.11.04
+		valueNew = nil;
 	}
 	NSIndexSet *indexes = [change objectForKey:NSKeyValueChangeIndexesKey];
 	
-	return [[[ESBChangeInfo alloc] initWithKind:kind oldValue:oldValue newValue:newValue indexes:indexes] autorelease];
+	return [[[ESBChangeInfo alloc] initWithKind:kind valueOld:valueOld valueNew:valueNew indexes:indexes] autorelease];
 }
 @end
 NSString * const ESBindingContext = @"ESBindingContext";
@@ -705,15 +726,15 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 	
 	switch ([changeInfo kind]) {
 		case NSKeyValueChangeSetting://NSKeyValueUnionSetMutation
-			[bindObject setValue:[changeInfo newValue] forKeyPath:self.keyPath];
+			[bindObject setValue:[changeInfo valueNew] forKeyPath:self.keyPath];
 			break;
 		case NSKeyValueChangeInsertion:
 			if ([changeInfo indexes] != nil) {
 				NSMutableArray * array = [bindObject mutableArrayValueForKeyPath:self.keyPath];
-				[array insertObjects:[changeInfo newValue] atIndexes:[changeInfo indexes]];
+				[array insertObjects:[changeInfo valueNew] atIndexes:[changeInfo indexes]];
 			}else {//NSKeyValueMinusSetMutation
 				NSMutableSet *set = [bindObject mutableSetValueForKeyPath:self.keyPath];
-				[set unionSet:[changeInfo newValue]];
+				[set unionSet:[changeInfo valueNew]];
 			}
 			break;
 		case NSKeyValueChangeRemoval:
@@ -722,19 +743,19 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 				[array removeObjectsAtIndexes:[changeInfo indexes]];
 			}else {//NSKeyValueIntersectSetMutation
 				NSMutableSet *set = [bindObject mutableSetValueForKeyPath:self.keyPath];
-				[set minusSet:[changeInfo oldValue]];
+				[set minusSet:[changeInfo valueOld]];
 			}
 			break;
 		case NSKeyValueChangeReplacement:
 			if ([changeInfo indexes] != nil) {
 				NSMutableArray * array = [bindObject mutableArrayValueForKeyPath:self.keyPath];
-				[array replaceObjectsAtIndexes:[changeInfo indexes] withObjects:[changeInfo newValue]];
+				[array replaceObjectsAtIndexes:[changeInfo indexes] withObjects:[changeInfo valueNew]];
 			}else {//NSKeyValueSetSetMutation
 				NSMutableSet *set = [bindObject mutableSetValueForKeyPath:self.keyPath];
-				//[set setSet:[changeInfo newValue]];
+				//[set setSet:[changeInfo valueNew]];
 				
-				[set minusSet:[changeInfo oldValue]];
-				[set unionSet:[changeInfo newValue]];
+				[set minusSet:[changeInfo valueOld]];
+				[set unionSet:[changeInfo valueNew]];
 				
 			}
 			break;
@@ -855,25 +876,25 @@ FOUNDATION_EXPORT NSString * const ESBMethodChangeMinusSetNameDefaultValue;	//mi
 //exp: object:didUserNameChange:
 -(NSString *) defaultMethodForKeyPath:(NSString *) keyPath;	//未找到匹配的kind方法时调用
 
-//默认 -> <objectName>:(boundObject) did<SettingName><keyPath>:(oldValue) with<SettingName>:(newValue)
+//默认 -> <objectName>:(boundObject) did<SettingName><keyPath>:(valueOld) with<SettingName>:(valueNew)
 //exp: object:didSetUserName:withUserName:
 -(NSString *) settingMethodNameForKeyPath:(NSString *) keyPath;
-//默认 -> <objectName>:(boundObject) did<InsertionName><keyPath>:(newValue) atIndexes:(indexes)
+//默认 -> <objectName>:(boundObject) did<InsertionName><keyPath>:(valueNew) atIndexes:(indexes)
 //exp: object:didInsertUserName:atIndexes:
 -(NSString *) insertionMethodNameForKeyPath:(NSString *) keyPath;
-//默认 -> <objectName>:(boundObject) did<RemovalName><keyPath>:(newValue) atIndexes:(indexes)
+//默认 -> <objectName>:(boundObject) did<RemovalName><keyPath>:(valueNew) atIndexes:(indexes)
 //exp: object:didRemoveUserName:atIndexes:
 -(NSString *) removalMethodNameForKeyPath:(NSString *) keyPath;
-//默认 -> <objectName>:(boundObject) did<ReplacementName><keyPath>:(oldValue) atIndexes:(indexes) with<keyPath>:(newValue)
+//默认 -> <objectName>:(boundObject) did<ReplacementName><keyPath>:(valueOld) atIndexes:(indexes) with<keyPath>:(valueNew)
 //exp: object:didReplaceUserName:atIndexes:withUserName:
 -(NSString *) replacementMethodNameForKeyPath:(NSString *) keyPath;
-//默认 -> <objectName>:(boundObject) did<MinusName><keyPath>:(oldValue)
+//默认 -> <objectName>:(boundObject) did<MinusName><keyPath>:(valueOld)
 //exp: object:didMinusUserName:
 -(NSString *) minusMethodNameForKeyPath:(NSString *) keyPath;
-//默认 -> <objectName>:(boundObject) did<UnionName><keyPath>:(newValue)
+//默认 -> <objectName>:(boundObject) did<UnionName><keyPath>:(valueNew)
 //exp: object:didUnionUserName:
 -(NSString *) unionMethodNameForKeyPath:(NSString *) keyPath;
-//默认 -> <objectName>:(boundObject) did<MinusName><keyPath>:(oldValue) with<UnionName><keyPath>:(newValue)
+//默认 -> <objectName>:(boundObject) did<MinusName><keyPath>:(valueOld) with<UnionName><keyPath>:(valueNew)
 -(NSString *) minusAndUnionMethodNameForKeyPath:(NSString *) keyPath;
 
 -(BOOL) invokDefaultMethod:(NSString *) method /*defaultMethodForKeyPath:*/
@@ -884,43 +905,43 @@ FOUNDATION_EXPORT NSString * const ESBMethodChangeMinusSetNameDefaultValue;	//mi
 -(BOOL) invokSettingMethod:(NSString *) method /*settingMethodNameForKeyPath:*/
 				bindObject:(id) bindObject 
 			   boundObject:(id) boundObject 
-				  oldValue:(id) oldValue 
-				  newValue:(id) newValue;
+				  valueOld:(id) valueOld 
+				  valueNew:(id) valueNew;
 
 -(BOOL) invokInsertionMethod:(NSString *) method /*insertionMethodNameForKeyPath:*/
 				  bindObject:(id) bindObject 
 				 boundObject:(id) boundObject 
-					newValue:(id) newValue
+					valueNew:(id) valueNew
 					 indexes:(NSIndexSet *) indexes;
 
 -(BOOL) invokRemovalMethod:(NSString *) method /*removalMethodNameForKeyPath:*/
 				bindObject:(id) bindObject 
 			   boundObject:(id) boundObject 
-				  oldValue:(id) oldValue
+				  valueOld:(id) valueOld
 				   indexes:(NSIndexSet *) indexes;
 
 -(BOOL) invokReplacementMethod:(NSString *) method /*replacementMethodNameForKeyPath:*/
 					bindObject:(id) bindObject 
 				   boundObject:(id) boundObject 
-					  oldValue:(id) oldValue
-					  newValue:(id) newValue
+					  valueOld:(id) valueOld
+					  valueNew:(id) valueNew
 					   indexes:(NSIndexSet *) indexes;
 
 -(BOOL) invokMinusMethod:(NSString *) method	/*minusMethodNameForKeyPath:*/
 			  bindObject:(id) bindObject 
 			 boundObject:(id) boundObject 
-				oldValue:(id) oldValue;
+				valueOld:(id) valueOld;
 
 -(BOOL) invokUnionMethod:(NSString *) method	/*unionMethodNameForKeyPath:*/
 			  bindObject:(id) bindObject 
 			 boundObject:(id) boundObject 
-				newValue:(id) newValue;
+				valueNew:(id) valueNew;
 
 -(BOOL) invokMinusAndUnionMethod:(NSString *) method /*minusAndUnionMethodNameForKeyPath:*/
 					  bindObject:(id) bindObject 
 					 boundObject:(id) boundObject 
-						oldValue:(id) oldValue
-						newValue:(id) newValue;
+						valueOld:(id) valueOld
+						valueNew:(id) valueNew;
 @end
 
 NSString * const ESBMethodChangeObjectNameDefaultValue		= @"object";
@@ -1107,8 +1128,8 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(BOOL) invokSettingMethod:(NSString *) method 
 				bindObject:(id) bindObject 
 			   boundObject:(id) boundObject 
-				  oldValue:(id) oldValue 
-				  newValue:(id) newValue{
+				  valueOld:(id) valueOld 
+				  valueNew:(id) valueNew{
 	
 	if (method != nil && bindObject != nil && boundObject != nil) {
 		SEL selector = NSSelectorFromString(method);
@@ -1118,8 +1139,8 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 				NSInvocation *invok = [NSInvocation invocationWithMethodSignature:signature];
 				[invok setSelector:selector];
 				[invok setArgument:&boundObject atIndex:2];
-				[invok setArgument:&oldValue atIndex:3];
-				[invok setArgument:&newValue atIndex:4];
+				[invok setArgument:&valueOld atIndex:3];
+				[invok setArgument:&valueNew atIndex:4];
 				[invok invokeWithTarget:bindObject];
 				return YES;
 			}
@@ -1131,9 +1152,9 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(BOOL) invokInsertionMethod:(NSString *) method 
 				  bindObject:(id) bindObject 
 				 boundObject:(id) boundObject 
-					newValue:(id) newValue
+					valueNew:(id) valueNew
 					 indexes:(NSIndexSet *) indexes{
-	if (method != nil && bindObject != nil && boundObject != nil && newValue != nil && indexes != nil) {
+	if (method != nil && bindObject != nil && boundObject != nil && valueNew != nil && indexes != nil) {
 		SEL selector = NSSelectorFromString(method);
 		if (selector != nil && [bindObject respondsToSelector:selector]) {
 			NSMethodSignature *signature = [bindObject methodSignatureForSelector:selector];
@@ -1141,7 +1162,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 				NSInvocation *invok = [NSInvocation invocationWithMethodSignature:signature];
 				[invok setSelector:selector];
 				[invok setArgument:&boundObject atIndex:2];
-				[invok setArgument:&newValue atIndex:3];
+				[invok setArgument:&valueNew atIndex:3];
 				[invok setArgument:&indexes atIndex:4];
 				[invok invokeWithTarget:bindObject];
 				return YES;
@@ -1154,9 +1175,9 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(BOOL) invokRemovalMethod:(NSString *) method 
 				bindObject:(id) bindObject 
 			   boundObject:(id) boundObject 
-				  oldValue:(id) oldValue
+				  valueOld:(id) valueOld
 				   indexes:(NSIndexSet *) indexes{
-	if (method != nil && bindObject != nil && boundObject != nil && oldValue != nil & indexes != nil) {
+	if (method != nil && bindObject != nil && boundObject != nil && valueOld != nil & indexes != nil) {
 		SEL selector = NSSelectorFromString(method);
 		if (selector != nil && [bindObject respondsToSelector:selector]) {
 			NSMethodSignature *signature = [bindObject methodSignatureForSelector:selector];
@@ -1164,7 +1185,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 				NSInvocation *invok = [NSInvocation invocationWithMethodSignature:signature];
 				[invok setSelector:selector];
 				[invok setArgument:&boundObject atIndex:2];
-				[invok setArgument:&oldValue atIndex:3];
+				[invok setArgument:&valueOld atIndex:3];
 				[invok setArgument:&indexes atIndex:4];
 				[invok invokeWithTarget:bindObject];
 				return YES;
@@ -1177,10 +1198,10 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(BOOL) invokReplacementMethod:(NSString *) method 
 					bindObject:(id) bindObject 
 				   boundObject:(id) boundObject 
-					  oldValue:(id) oldValue
-					  newValue:(id) newValue
+					  valueOld:(id) valueOld
+					  valueNew:(id) valueNew
 					   indexes:(NSIndexSet *) indexes{
-	if (method != nil && bindObject != nil && boundObject != nil && oldValue != nil && newValue != nil && indexes != nil) {
+	if (method != nil && bindObject != nil && boundObject != nil && valueOld != nil && valueNew != nil && indexes != nil) {
 		SEL selector = NSSelectorFromString(method);
 		if (selector != nil && [bindObject respondsToSelector:selector]) {
 			NSMethodSignature *signature = [bindObject methodSignatureForSelector:selector];
@@ -1188,9 +1209,9 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 				NSInvocation *invok = [NSInvocation invocationWithMethodSignature:signature];
 				[invok setSelector:selector];
 				[invok setArgument:&boundObject atIndex:2];
-				[invok setArgument:&oldValue atIndex:3];
+				[invok setArgument:&valueOld atIndex:3];
 				[invok setArgument:&indexes atIndex:4];
-				[invok setArgument:&newValue atIndex:5];
+				[invok setArgument:&valueNew atIndex:5];
 				[invok invokeWithTarget:bindObject];
 				return YES;
 			}
@@ -1202,8 +1223,8 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(BOOL) invokMinusMethod:(NSString *) method 
 			  bindObject:(id) bindObject 
 			 boundObject:(id) boundObject 
-				oldValue:(id) oldValue{
-	if (method != nil && bindObject != nil && boundObject != nil && oldValue != nil) {
+				valueOld:(id) valueOld{
+	if (method != nil && bindObject != nil && boundObject != nil && valueOld != nil) {
 		SEL selector = NSSelectorFromString(method);
 		if (selector != nil && [bindObject respondsToSelector:selector]) {
 			NSMethodSignature *signature = [bindObject methodSignatureForSelector:selector];
@@ -1211,7 +1232,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 				NSInvocation *invok = [NSInvocation invocationWithMethodSignature:signature];
 				[invok setSelector:selector];
 				[invok setArgument:&boundObject atIndex:2];
-				[invok setArgument:&oldValue atIndex:3];
+				[invok setArgument:&valueOld atIndex:3];
 				[invok invokeWithTarget:bindObject];
 				return YES;
 			}
@@ -1223,8 +1244,8 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(BOOL) invokUnionMethod:(NSString *) method 
 			  bindObject:(id) bindObject 
 			 boundObject:(id) boundObject 
-				newValue:(id) newValue{
-	if (method != nil && bindObject != nil && boundObject != nil && newValue != nil) {
+				valueNew:(id) valueNew{
+	if (method != nil && bindObject != nil && boundObject != nil && valueNew != nil) {
 		SEL selector = NSSelectorFromString(method);
 		if (selector != nil && [bindObject respondsToSelector:selector]) {
 			NSMethodSignature *signature = [bindObject methodSignatureForSelector:selector];
@@ -1232,7 +1253,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 				NSInvocation *invok = [NSInvocation invocationWithMethodSignature:signature];
 				[invok setSelector:selector];
 				[invok setArgument:&boundObject atIndex:2];
-				[invok setArgument:&newValue atIndex:3];
+				[invok setArgument:&valueNew atIndex:3];
 				[invok invokeWithTarget:bindObject];
 				return YES;
 			}
@@ -1244,9 +1265,9 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(BOOL) invokMinusAndUnionMethod:(NSString *) method 
 					  bindObject:(id) bindObject 
 					 boundObject:(id) boundObject 
-						oldValue:(id) oldValue
-						newValue:(id) newValue{
-	if (method != nil && bindObject != nil && boundObject != nil && oldValue != nil && newValue != nil) {
+						valueOld:(id) valueOld
+						valueNew:(id) valueNew{
+	if (method != nil && bindObject != nil && boundObject != nil && valueOld != nil && valueNew != nil) {
 		SEL selector = NSSelectorFromString(method);
 		if (selector != nil && [bindObject respondsToSelector:selector]) {
 			NSMethodSignature *signature = [bindObject methodSignatureForSelector:selector];
@@ -1254,8 +1275,8 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 				NSInvocation *invok = [NSInvocation invocationWithMethodSignature:signature];
 				[invok setSelector:selector];
 				[invok setArgument:&boundObject atIndex:2];
-				[invok setArgument:&oldValue atIndex:3];
-				[invok setArgument:&newValue atIndex:4];
+				[invok setArgument:&valueOld atIndex:3];
+				[invok setArgument:&valueNew atIndex:4];
 				[invok invokeWithTarget:bindObject];
 				return YES;
 			}
@@ -1276,8 +1297,8 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 	BOOL invok = NO;
 	
 	NSKeyValueChange kind = [changeInfo kind];
-	id newValue = [changeInfo newValue];
-	id oldValue = [changeInfo oldValue];
+	id valueNew = [changeInfo valueNew];
+	id valueOld = [changeInfo valueOld];
 	NSIndexSet *indexes = [changeInfo indexes];
 	switch (kind) {
 		case NSKeyValueChangeSetting:{
@@ -1285,67 +1306,67 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 			invok = [self invokSettingMethod:settingMethod
 								  bindObject:bindObject
 								 boundObject:boundObject
-									oldValue:oldValue
-									newValue:newValue];
+									valueOld:valueOld
+									valueNew:valueNew];
 			break;
 		}
 		case NSKeyValueChangeInsertion:{//NSKeyValueUnionSetMutation
-			if (newValue != nil) {
+			if (valueNew != nil) {
 				if (indexes != nil) {		//有序 -> Array
 					NSString *insertionMethod = [self insertionMethodNameForKeyPath:keyPath];
 					invok = [self invokInsertionMethod:insertionMethod
 											bindObject:bindObject
 										   boundObject:boundObject
-											  newValue:newValue
+											  valueNew:valueNew
 											   indexes:indexes];
 				}else {		//无序 -> set
 					NSString *unionMethod = [self unionMethodNameForKeyPath:keyPath];
 					invok = [self invokUnionMethod:unionMethod
 										bindObject:bindObject
 									   boundObject:boundObject
-										  newValue:newValue];
+										  valueNew:valueNew];
 				}
 				
 				break;
 			}
 		}
 		case NSKeyValueChangeRemoval:{//NSKeyValueMinusSetMutation,NSKeyValueIntersectSetMutation
-			if (oldValue != nil) {
+			if (valueOld != nil) {
 				if (indexes != nil) {
 					NSString *removalMethod = [self removalMethodNameForKeyPath:keyPath];
 					invok = [self invokRemovalMethod:removalMethod
 										  bindObject:bindObject
 										 boundObject:boundObject
-											oldValue:oldValue
+											valueOld:valueOld
 											 indexes:indexes];
 				}else {
 					NSString *minusMethod = [self minusMethodNameForKeyPath:keyPath];
 					invok = [self invokMinusMethod:minusMethod
 										bindObject:bindObject
 									   boundObject:boundObject
-										  oldValue:oldValue];
+										  valueOld:valueOld];
 				}
 			}
 			break;
 		}
 			
 		case NSKeyValueChangeReplacement:{//NSKeyValueSetSetMutation
-			if (oldValue != nil && newValue != nil) {
+			if (valueOld != nil && valueNew != nil) {
 				if (indexes != nil) {
 					NSString *replacementMethod = [self replacementMethodNameForKeyPath:keyPath];
 					invok = [self invokReplacementMethod:replacementMethod
 											  bindObject:bindObject
 											 boundObject:boundObject
-												oldValue:oldValue
-												newValue:newValue
+												valueOld:valueOld
+												valueNew:valueNew
 												 indexes:indexes];
 				}else {
 					NSString *minusAndUnionMethod = [self minusAndUnionMethodNameForKeyPath:keyPath];
 					invok = [self invokMinusAndUnionMethod:minusAndUnionMethod
 												bindObject:bindObject
 											   boundObject:boundObject
-												  oldValue:oldValue 
-												  newValue:newValue];
+												  valueOld:valueOld 
+												  valueNew:valueNew];
 				}
 				
 			}
@@ -1363,8 +1384,8 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 	
 	//	NSLog(@"-----------------------------------------------------------------");
 	//	NSLog(@"kind:%d",[changeInfo kind]);
-	//	NSLog(@"newValue:%@",[changeInfo newValue]);
-	//	NSLog(@"oldValue:%@",[changeInfo oldValue]);
+	//	NSLog(@"valueNew:%@",[changeInfo valueNew]);
+	//	NSLog(@"valueOld:%@",[changeInfo valueOld]);
 	//	NSLog(@"indexex:%@",[changeInfo indexes]);
 	//	NSLog(@"-----------------------------------------------------------------");
 	//	
