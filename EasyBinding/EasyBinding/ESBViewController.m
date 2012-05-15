@@ -7,7 +7,7 @@
 //
 
 #import "ESBViewController.h"
-#import "EasyBinding.h"
+#import <EasyBinding/EasyBinding.h>
 @implementation ESBViewController
 @synthesize model = _model;
 - (void)dealloc {
