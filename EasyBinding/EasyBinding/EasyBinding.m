@@ -461,12 +461,11 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 }
 
 +(id) defaultCenter{
-	static id defaultCenter = nil;
-	@synchronized(defaultCenter){
-		if (defaultCenter == nil) {
-			defaultCenter = [[self alloc] init];
-		}
-	}
+	static id defaultCenter;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		defaultCenter = [[self alloc] init];
+	});
 	return defaultCenter;
 }
 
