@@ -1014,8 +1014,20 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 }
 
 
+-(NSString *) initialCapitalizedStringForString:(NSString *)string
+{
+    return [string stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+                                           withString:[[string substringToIndex:1] uppercaseString]];
+}
+
 -(NSString *) nameForKeyPath:(NSString *) keyPath{
-	return [[keyPath capitalizedString] stringByReplacingOccurrencesOfString:@"." withString:@""];
+    NSMutableString *name = [NSMutableString string];
+    
+    for(NSString *component in [keyPath componentsSeparatedByString:@"."]) {
+        [name appendFormat:[self initialCapitalizedStringForString:component]];
+    }
+         
+	return name;
 }
 
 -(NSString *) defaultMethodForKeyPath:(NSString *) keyPath{
@@ -1030,7 +1042,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(NSString *) settingMethodNameForKeyPath:(NSString *) keyPath{
 	NSMutableString *methodName = [NSMutableString stringWithString:self.objectName];
 	[methodName appendString:@":did"];
-	[methodName appendString:[self.settingName capitalizedString]];
+	[methodName appendString:[self initialCapitalizedStringForString:self.settingName]];
 	NSString *keyPathName = [self nameForKeyPath:keyPath];
 	[methodName appendString:keyPathName];
 	[methodName appendString:@":with"];
@@ -1042,7 +1054,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(NSString *) insertionMethodNameForKeyPath:(NSString *) keyPath{
 	NSMutableString *methodName = [NSMutableString stringWithString:self.objectName];
 	[methodName appendString:@":did"];
-	[methodName appendString:[self.insertionName capitalizedString]];
+	[methodName appendString:[self initialCapitalizedStringForString:self.insertionName]];
 	NSString *keyPathName = [self nameForKeyPath:keyPath];
 	[methodName appendString:keyPathName];
 	[methodName appendString:@":atIndexes:"];
@@ -1052,7 +1064,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(NSString *) removalMethodNameForKeyPath:(NSString *) keyPath{
 	NSMutableString *methodName = [NSMutableString stringWithString:self.objectName];
 	[methodName appendString:@":did"];
-	[methodName appendString:[self.removalName capitalizedString]];
+	[methodName appendString:[self initialCapitalizedStringForString:self.removalName]];
 	NSString *keyPathName = [self nameForKeyPath:keyPath];
 	[methodName appendString:keyPathName];
 	[methodName appendString:@":atIndexes:"];
@@ -1062,7 +1074,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(NSString *) replacementMethodNameForKeyPath:(NSString *) keyPath{
 	NSMutableString *methodName = [NSMutableString stringWithString:self.objectName];
 	[methodName appendString:@":did"];
-	[methodName appendString:[self.replacementName capitalizedString]];
+	[methodName appendString:[self initialCapitalizedStringForString:self.replacementName]];
 	NSString *keyPathName = [self nameForKeyPath:keyPath];
 	[methodName appendString:keyPathName];
 	[methodName appendString:@":atIndexes:with"];
@@ -1074,7 +1086,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(NSString *) minusMethodNameForKeyPath:(NSString *) keyPath{
 	NSMutableString *methodName = [NSMutableString stringWithString:self.objectName];
 	[methodName appendString:@":did"];
-	[methodName appendString:[self.minusName capitalizedString]];
+	[methodName appendString:[self initialCapitalizedStringForString:self.minusName]];
 	NSString *keyPathName = [self nameForKeyPath:keyPath];
 	[methodName appendString:keyPathName];
 	[methodName appendString:@":"];
@@ -1084,7 +1096,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(NSString *) unionMethodNameForKeyPath:(NSString *) keyPath{
 	NSMutableString *methodName = [NSMutableString stringWithString:self.objectName];
 	[methodName appendString:@":did"];
-	[methodName appendString:[self.unionName capitalizedString]];
+	[methodName appendString:[self initialCapitalizedStringForString:self.unionName]];
 	NSString *keyPathName = [self nameForKeyPath:keyPath];
 	[methodName appendString:keyPathName];
 	[methodName appendString:@":"];
@@ -1094,11 +1106,11 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 -(NSString *) minusAndUnionMethodNameForKeyPath:(NSString *) keyPath{
 	NSMutableString *methodName = [NSMutableString stringWithString:self.objectName];
 	[methodName appendString:@":did"];
-	[methodName appendString:[self.minusName capitalizedString]];
+	[methodName appendString:[self initialCapitalizedStringForString:self.minusName]];
 	NSString *keyPathName = [self nameForKeyPath:keyPath];
 	[methodName appendString:keyPathName];
 	[methodName appendString:@":with"];
-	[methodName appendString:[self.unionName capitalizedString]]; 
+	[methodName appendString:[self initialCapitalizedStringForString:self.unionName]]; 
 	[methodName appendString:keyPathName];
 	[methodName appendString:@":"];
 	return methodName;
