@@ -52,8 +52,8 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 
 
 @interface ESBBinder : NSObject <ESBBinder>{
-	id bindObject_;
-	NSMutableDictionary *bounderDictionary_;
+	id _bindObject;
+	NSMutableDictionary *_bounderDictionary;
 }
 @property (nonatomic, retain, readonly) NSDictionary *bounderDictionary;
 @property (nonatomic, assign, readonly) id bindObject;
@@ -81,11 +81,11 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 
 
 @interface ESBBounder : NSObject <ESBBounder> {
-	id boundObject_;
-	NSString *boundKeyPath_;
-	id<ESBBinder> binder_;
-	NSMutableArray *transformers_;
-	BOOL bounded_;
+	id _boundObject;
+	NSString *_boundKeyPath;
+	id<ESBBinder> _binder;
+	NSMutableArray *_transformers;
+	BOOL _bounded;
 }
 +(id) bounderWithBinder:(id<ESBBinder>) binder 
 			boundObject:(id) boundObject 
@@ -103,8 +103,8 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 
 
 @interface ESBBounderKey : NSObject <ESBBounderKey>{
-	id boundObject_;
-	NSString *boundKeyPath_;
+	id _boundObject;
+	NSString *_boundKeyPath;
 }
 @property (nonatomic, assign, readonly) id boundObject;
 @property (nonatomic, copy, readonly) NSString *boundKeyPath;
@@ -115,10 +115,10 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 @end
 
 @interface ESBChangeInfo : NSObject <ESBChangeInfo>{
-	NSKeyValueChange kind_;
-	id valueOld_;
-	id valueNew_;
-	NSIndexSet *indexes_;
+	NSKeyValueChange _kind;
+	id _valueOld;
+	id _valueNew;
+	NSIndexSet *_indexes;
 }
 @property (nonatomic, readonly) NSKeyValueChange kind;
 @property (nonatomic, retain, readonly) id valueOld;
@@ -129,10 +129,10 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 @end
 
 @implementation ESBChangeInfo
-@synthesize kind = kind_;
-@synthesize valueOld = valueOld_;
-@synthesize valueNew = valueNew_;
-@synthesize indexes = indexes_;
+@synthesize kind = _kind;
+@synthesize valueOld = _valueOld;
+@synthesize valueNew = _valueNew;
+@synthesize indexes = _indexes;
 
 -(NSString *) description{
 	return [NSString stringWithFormat:@"(valueOld:%@,valueNew:%@,indexes:%@,kind:%d)",
@@ -140,9 +140,9 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 }
 
 -(void) dealloc{
-	[self->valueOld_ release],self->valueOld_ = nil;
-	[self->valueNew_ release],self->valueNew_ = nil;
-	[self->indexes_ release], self->indexes_ = nil;
+	[self->_valueOld release],self->_valueOld = nil;
+	[self->_valueNew release],self->_valueNew = nil;
+	[self->_indexes release], self->_indexes = nil;
 	[super dealloc];
 }
 
@@ -153,10 +153,10 @@ FOUNDATION_EXPORT NSKeyValueObservingOptions const ESBindingOptions;
 			[self release];
 			self = nil;
 		}else {
-			self->kind_ = kind;
-			self->valueOld_ = [valueOld retain];
-			self->valueNew_ = [valueNew retain];
-			self->indexes_ = [indexes retain];
+			self->_kind = kind;
+			self->_valueOld = [valueOld retain];
+			self->_valueNew = [valueNew retain];
+			self->_indexes = [indexes retain];
 		}
 	}
 	return self;
@@ -184,18 +184,18 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 
 
 @implementation ESBBounder
-@synthesize boundObject = boundObject_;
-@synthesize boundKeyPath = boundKeyPath_;
-@synthesize binder = binder_;
-@synthesize transformers = transformers_;
-@synthesize bounded = bounded_;
+@synthesize boundObject = _boundObject;
+@synthesize boundKeyPath = _boundKeyPath;
+@synthesize binder = _binder;
+@synthesize transformers = _transformers;
+@synthesize bounded = _bounded;
 
 -(void) dealloc{
 	[self unbound];
-	[self->transformers_ release],self->transformers_ = nil;
-	self->binder_ = nil;
-	self->boundObject_ = nil;
-	[self->boundKeyPath_ release],self->boundKeyPath_ = nil;
+	[self->_transformers release],self->_transformers = nil;
+	self->_binder = nil;
+	self->_boundObject = nil;
+	[self->_boundKeyPath release],self->_boundKeyPath = nil;
 	
 	[super dealloc];
 }
@@ -213,31 +213,31 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 			[self release];
 			self = nil;
 		}else {
-			self->binder_ = binder;
-			self->boundObject_ = boundObject;
-			self->boundKeyPath_ = [boundKeyPath copy];
+			self->_binder = binder;
+			self->_boundObject = boundObject;
+			self->_boundKeyPath = [boundKeyPath copy];
 		}
 	}
 	return self;
 }
 
 -(NSMutableArray *) transformers{
-	if (self->transformers_ == nil) {
-		self->transformers_ = [[NSMutableArray array] retain];
+	if (self->_transformers == nil) {
+		self->_transformers = [[NSMutableArray array] retain];
 	}
-	return self->transformers_;
+	return self->_transformers;
 }
 
 -(void) bound{
 	if (!self.bounded) {
 		[self.boundObject addObserver:self forKeyPath:self.boundKeyPath options:ESBindingOptions context:ESBindingContext];
-		self->bounded_ = YES;
+		self->_bounded = YES;
 	}
 }
 -(void) unbound{
 	if (self.bounded) {
 		[self.boundObject removeObserver:self forKeyPath:self.boundKeyPath];
-		self->bounded_ = NO;
+		self->_bounded = NO;
 	}
 }
 
@@ -264,11 +264,11 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 
 @implementation ESBBounderKey
 
-@synthesize boundObject = boundObject_;
-@synthesize boundKeyPath = boundKeyPath_;
+@synthesize boundObject = _boundObject;
+@synthesize boundKeyPath = _boundKeyPath;
 -(void) dealloc{
-	self->boundObject_ = nil;
-	[self->boundKeyPath_ release], self->boundKeyPath_ = nil;
+	self->_boundObject = nil;
+	[self->_boundKeyPath release], self->_boundKeyPath = nil;
 	[super dealloc];
 }
 -(id) initWithObject:(id) object withKeyPath:(NSString *) keyPath{
@@ -278,8 +278,8 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 			[self release];
 			self = nil;
 		}else {
-			self->boundObject_ = object;
-			self->boundKeyPath_ = [keyPath copy];
+			self->_boundObject = object;
+			self->_boundKeyPath = [keyPath copy];
 		}
 	}
 	return self;
@@ -332,13 +332,13 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 
 @end
 @implementation ESBBinder
-@synthesize bindObject = bindObject_;
-@synthesize bounderDictionary = bounderDictionary_;
+@synthesize bindObject = _bindObject;
+@synthesize bounderDictionary = _bounderDictionary;
 
 -(void) dealloc{
 	[self unbindAll];
-	[self->bounderDictionary_ release], self->bounderDictionary_ = nil;
-	self->bindObject_ = nil;
+	[self->_bounderDictionary release], self->_bounderDictionary = nil;
+	self->_bindObject = nil;
 	[super dealloc];
 }
 
@@ -349,7 +349,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 			[self release];
 			self = nil;
 		}else {
-			self->bindObject_ = object;
+			self->_bindObject = object;
 		}
 	}
 	return self;
@@ -360,10 +360,10 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 }
 
 -(NSDictionary *) bounderDictionary{
-	if (self->bounderDictionary_ == nil) {
-		self->bounderDictionary_ = [[NSMutableDictionary dictionary] retain];
+	if (self->_bounderDictionary == nil) {
+		self->_bounderDictionary = [[NSMutableDictionary dictionary] retain];
 	}
-	return self->bounderDictionary_;
+	return self->_bounderDictionary;
 }
 
 -(NSArray *) bounders{
@@ -427,7 +427,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 @end
 
 @interface ESBBindingCenter : NSObject {
-	NSMutableDictionary *bindings_;
+	NSMutableDictionary *_bindings;
 }
 @property (nonatomic, readonly) NSDictionary *bindings;
 
@@ -456,7 +456,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 @implementation ESBBindingCenter
 -(void) dealloc{
 	[self unbindAll];
-	[self->bindings_ release], self->bindings_ = nil;
+	[self->_bindings release], self->_bindings = nil;
 	[super dealloc];
 }
 
@@ -471,10 +471,10 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 }
 
 -(NSDictionary *) bindings{
-	if (self->bindings_ == nil) {
-		self->bindings_ = [[NSMutableDictionary dictionary] retain];
+	if (self->_bindings == nil) {
+		self->_bindings = [[NSMutableDictionary dictionary] retain];
 	}
-	return self->bindings_;
+	return self->_bindings;
 }
 
 -(id) nonretainObjectWithObject:(id) object{
@@ -565,7 +565,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 @end
 
 @interface ESBSelectorChangeTransformer : NSObject <ESBChangeTransformer>{
-	SEL selector_;
+	SEL _selector;
 }
 @property (nonatomic, readonly) SEL selector;
 
@@ -575,10 +575,10 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 @end
 
 @implementation ESBSelectorChangeTransformer
-@synthesize selector = selector_;
+@synthesize selector = _selector;
 
 -(void) dealloc{
-	self->selector_ = nil;
+	self->_selector = nil;
 	[super dealloc];
 }
 
@@ -586,7 +586,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 	self = [super init];
 	if (self != nil) {
 		if (selector != nil) {
-			self->selector_ = selector;
+			self->_selector = selector;
 		}else {
 			[self release], self = nil;
 		}
@@ -682,7 +682,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 
 // 未使用 NSValueTransformer 做值转换，这里直接赋值，需要保证双方类型相同
 @interface ESBValueChangeTransformer : NSObject <ESBChangeTransformer>{
-	NSString *keyPath_;
+	NSString *_keyPath;
 }
 @property (nonatomic, copy, readonly) NSString *keyPath;
 
@@ -691,9 +691,9 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 @end
 
 @implementation ESBValueChangeTransformer
-@synthesize keyPath = keyPath_;
+@synthesize keyPath = _keyPath;
 -(void) dealloc{
-	[keyPath_ release], keyPath_ = nil;
+	[_keyPath release], _keyPath = nil;
 	[super dealloc];
 }
 
@@ -708,7 +708,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 			[self release];
 			self = nil;
 		}else {
-			keyPath_ = [keyPath copy];
+			_keyPath = [keyPath copy];
 		}
         
 	}
@@ -778,7 +778,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 @end
 
 @interface ESBBlockChangeTransformer : NSObject <ESBChangeTransformer>{
-	ESBChangeTransformerBlock block_;
+	ESBChangeTransformerBlock _block;
 }
 @property (nonatomic, copy, readonly) ESBChangeTransformerBlock block;
 -(id) initWithBlock:(ESBChangeTransformerBlock) block;
@@ -786,9 +786,9 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 @end
 
 @implementation ESBBlockChangeTransformer
-@synthesize block = block_;
+@synthesize block = _block;
 -(void) dealloc{
-	[block_ release], block_ = nil;
+	[_block release], _block = nil;
 	[super dealloc];
 }
 +(id) transformerWithBlock:(ESBChangeTransformerBlock) block{
@@ -801,7 +801,7 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 			[self release];
 			self = nil;
 		}else {
-			block_ = [block copy];
+			_block = [block copy];
 		}
 	}
 	return self;
@@ -842,17 +842,17 @@ FOUNDATION_EXPORT NSString * const ESBMethodChangeMinusSetNameDefaultValue;	//mi
 
 
 @interface ESBMethodChangeTransformer : NSObject <ESBChangeTransformer> {
-	NSString *settingName_;			//NSKeyValueChangeSetting		if nil then default
-	NSString *insertionName_;		//NSKeyValueChangeInsertion		if nil then default
-	NSString *removalName_;			//NSKeyValueChangeRemoval		if nil then default
-	NSString *replacementName_;		//NSKeyValueChangeReplacement	if nil then default
+	NSString *_settingName;			//NSKeyValueChangeSetting		if nil then default
+	NSString *_insertionName;		//NSKeyValueChangeInsertion		if nil then default
+	NSString *_removalName;			//NSKeyValueChangeRemoval		if nil then default
+	NSString *_replacementName;		//NSKeyValueChangeReplacement	if nil then default
 	
-	NSString *unionName_;		//NSKeyValueUnionSetMutation		if nil then default
-	NSString *minusName_;		//NSKeyValueMinusSetMutation		if nil then default
-    //	NSString *intersectName_;	//NSKeyValueIntersectSetMutation	if nil then default
-    //	NSString *setName_;			//NSKeyValueSetSetMutation			if nil then default
+	NSString *_unionName;		//NSKeyValueUnionSetMutation		if nil then default
+	NSString *_minusName;		//NSKeyValueMinusSetMutation		if nil then default
+    //	NSString *_intersectName;	//NSKeyValueIntersectSetMutation	if nil then default
+    //	NSString *_setName;			//NSKeyValueSetSetMutation			if nil then default
 	
-	NSString *objectName_;			//if nil then default
+	NSString *_objectName;			//if nil then default
     
 }
 
@@ -957,61 +957,61 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
 //NSString * const ESBMethodChangeSetSetNameDefaultValue		= @"set";
 
 @implementation ESBMethodChangeTransformer
-@synthesize settingName = settingName_;
-@synthesize insertionName = insertionName_;
-@synthesize removalName = removalName_;
-@synthesize replacementName = replacementName_;
+@synthesize settingName = _settingName;
+@synthesize insertionName = _insertionName;
+@synthesize removalName = _removalName;
+@synthesize replacementName = _replacementName;
 
-@synthesize unionName = unionName_;
-@synthesize minusName = minusName_;
-//@synthesize intersectName = intersectName_;
-//@synthesize setName = setName_;
+@synthesize unionName = _unionName;
+@synthesize minusName = _minusName;
+//@synthesize intersectName = _intersectName;
+//@synthesize setName = _setName;
 
-@synthesize objectName = objectName_;
+@synthesize objectName = _objectName;
 
 -(void) dealloc{
-	[settingName_ release],settingName_ = nil;
-	[insertionName_ release],insertionName_ = nil;
-	[removalName_ release],removalName_ = nil;
-	[replacementName_ release],replacementName_ = nil;
+	[_settingName release],_settingName = nil;
+	[_insertionName release],_insertionName = nil;
+	[_removalName release],_removalName = nil;
+	[_replacementName release],_replacementName = nil;
 	
-	[unionName_ release],unionName_ = nil;
-	[minusName_ release],minusName_ = nil;
-	//[intersectName_ release],intersectName_= nil;
-	//[setName_ release],setName_ = nil;
+	[_unionName release],_unionName = nil;
+	[_minusName release],_minusName = nil;
+	//[_intersectName release],_intersectName= nil;
+	//[_setName release],_setName = nil;
 	
-	[objectName_ release],objectName_= nil;
+	[_objectName release],_objectName= nil;
 	[super dealloc];
 }
 +(id) transformer{
 	return [[[self alloc] init] autorelease];
 }
 -(NSString *) settingName{
-	return settingName_ != nil ? settingName_ : ESBMethodChangeSettingNameDefaultValue;
+	return _settingName != nil ? _settingName : ESBMethodChangeSettingNameDefaultValue;
 }
 -(NSString *) insertionName{
-	return insertionName_ != nil ? insertionName_ : ESBMethodChangeInsertionNameDefaultValue;
+	return _insertionName != nil ? _insertionName : ESBMethodChangeInsertionNameDefaultValue;
 }
 -(NSString *) removalName{
-	return removalName_ != nil ? removalName_ : ESBMethodChangeRemovalNameDefaultValue;
+	return _removalName != nil ? _removalName : ESBMethodChangeRemovalNameDefaultValue;
 }
 -(NSString *) replacementName{
-	return replacementName_ != nil ? replacementName_ : ESBMethodChangeReplacementNameDefaultValue;
+	return _replacementName != nil ? _replacementName : ESBMethodChangeReplacementNameDefaultValue;
 }
 -(NSString *) unionName{
-	return unionName_ != nil ? unionName_ : ESBMethodChangeUnionSetNameDefaultValue;
+	return _unionName != nil ? _unionName : ESBMethodChangeUnionSetNameDefaultValue;
 }
 -(NSString *) minusName{
-	return minusName_ != nil ? minusName_ : ESBMethodChangeMinusSetNameDefaultValue;
+	return _minusName != nil ? _minusName : ESBMethodChangeMinusSetNameDefaultValue;
 }
 //-(NSString *) intersectName{
-//	return intersectName_ != nil ? intersectName_ : ESBMethodChangeIntersectSetNameDefaultValue;
+//	return _intersectName != nil ? _intersectName : ESBMethodChangeIntersectSetNameDefaultValue;
 //}
 //-(NSString *) setName{
-//	return setName_ != nil ? setName_ : ESBMethodChangeSetSetNameDefaultValue;
+//	return _setName != nil ? _setName : ESBMethodChangeSetSetNameDefaultValue;
 //}
 -(NSString *) objectName{
-	return objectName_ != nil ? objectName_ : ESBMethodChangeObjectNameDefaultValue;
+	return _objectName != nil ? _objectName : ESBMethodChangeObjectNameDefaultValue;
 }
 
 
