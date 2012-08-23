@@ -1024,7 +1024,7 @@ NSString * const ESBMethodChangeMinusSetNameDefaultValue	= @"minus";
     NSMutableString *name = [NSMutableString string];
     
     for(NSString *component in [keyPath componentsSeparatedByString:@"."]) {
-        [name appendFormat:[self initialCapitalizedStringForString:component]];
+        [name appendString:[self initialCapitalizedStringForString:component]];
     }
          
 	return name;
