@@ -13,9 +13,22 @@
 		18226BBB14A2F57D00A4449C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18226BB914A2F57D00A4449C /* InfoPlist.strings */; };
 		18226BBD14A2F57D00A4449C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BBC14A2F57D00A4449C /* main.m */; };
 		18226BC114A2F57D00A4449C /* ESBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BC014A2F57D00A4449C /* ESBAppDelegate.m */; };
-		18226BC914A2F59200A4449C /* EasyBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BC814A2F59200A4449C /* EasyBinding.m */; };
 		18226BD114A2F62C00A4449C /* ESBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BCF14A2F62C00A4449C /* ESBViewController.m */; };
+		7D0B9CAD1562996E00B111CB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18226BB214A2F57D00A4449C /* Foundation.framework */; };
+		7D0B9CB81562998300B111CB /* EasyBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 18226BC714A2F59200A4449C /* EasyBinding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7D0B9CB91562998B00B111CB /* EasyBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18226BC814A2F59200A4449C /* EasyBinding.m */; };
+		7D0B9CC015629A5F00B111CB /* libEasyBinding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D0B9CAC1562996E00B111CB /* libEasyBinding.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7D0B9CBE15629A5A00B111CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18226BA314A2F57D00A4449C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7D0B9CAB1562996E00B111CB;
+			remoteInfo = libEasyBinding;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		18226BAC14A2F57D00A4449C /* EasyBinding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyBinding.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,6 +45,7 @@
 		18226BC814A2F59200A4449C /* EasyBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasyBinding.m; sourceTree = "<group>"; };
 		18226BCE14A2F62C00A4449C /* ESBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESBViewController.h; sourceTree = "<group>"; };
 		18226BCF14A2F62C00A4449C /* ESBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESBViewController.m; sourceTree = "<group>"; };
+		7D0B9CAC1562996E00B111CB /* libEasyBinding.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEasyBinding.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,9 +53,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D0B9CC015629A5F00B111CB /* libEasyBinding.a in Frameworks */,
 				18226BB114A2F57D00A4449C /* UIKit.framework in Frameworks */,
 				18226BB314A2F57D00A4449C /* Foundation.framework in Frameworks */,
 				18226BB514A2F57D00A4449C /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D0B9CA91562996E00B111CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D0B9CAD1562996E00B111CB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				18226BAC14A2F57D00A4449C /* EasyBinding.app */,
+				7D0B9CAC1562996E00B111CB /* libEasyBinding.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,6 +126,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		7D0B9CAA1562996E00B111CB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D0B9CB81562998300B111CB /* EasyBinding.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		18226BAB14A2F57D00A4449C /* EasyBinding */ = {
 			isa = PBXNativeTarget;
@@ -114,11 +149,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				7D0B9CBF15629A5A00B111CB /* PBXTargetDependency */,
 			);
 			name = EasyBinding;
 			productName = EasyBinding;
 			productReference = 18226BAC14A2F57D00A4449C /* EasyBinding.app */;
 			productType = "com.apple.product-type.application";
+		};
+		7D0B9CAB1562996E00B111CB /* libEasyBinding */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D0B9CB61562996E00B111CB /* Build configuration list for PBXNativeTarget "libEasyBinding" */;
+			buildPhases = (
+				7D0B9CA81562996E00B111CB /* Sources */,
+				7D0B9CA91562996E00B111CB /* Frameworks */,
+				7D0B9CAA1562996E00B111CB /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libEasyBinding;
+			productName = libEasyBinding;
+			productReference = 7D0B9CAC1562996E00B111CB /* libEasyBinding.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -142,6 +195,7 @@
 			projectRoot = "";
 			targets = (
 				18226BAB14A2F57D00A4449C /* EasyBinding */,
+				7D0B9CAB1562996E00B111CB /* libEasyBinding */,
 			);
 		};
 /* End PBXProject section */
@@ -164,12 +218,27 @@
 			files = (
 				18226BBD14A2F57D00A4449C /* main.m in Sources */,
 				18226BC114A2F57D00A4449C /* ESBAppDelegate.m in Sources */,
-				18226BC914A2F59200A4449C /* EasyBinding.m in Sources */,
 				18226BD114A2F62C00A4449C /* ESBViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7D0B9CA81562996E00B111CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D0B9CB91562998B00B111CB /* EasyBinding.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7D0B9CBF15629A5A00B111CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7D0B9CAB1562996E00B111CB /* libEasyBinding */;
+			targetProxy = 7D0B9CBE15629A5A00B111CB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		18226BB914A2F57D00A4449C /* InfoPlist.strings */ = {
@@ -231,7 +300,15 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyBinding/EasyBinding-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+				);
 				INFOPLIST_FILE = "EasyBinding/EasyBinding-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -242,9 +319,43 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyBinding/EasyBinding-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+				);
 				INFOPLIST_FILE = "EasyBinding/EasyBinding-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		7D0B9CB41562996E00B111CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/libEasyBinding.dst;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = EasyBinding;
+				PUBLIC_HEADERS_FOLDER_PATH = include/EasyBinding;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		7D0B9CB51562996E00B111CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/libEasyBinding.dst;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = EasyBinding;
+				PUBLIC_HEADERS_FOLDER_PATH = include/EasyBinding;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -268,6 +379,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		7D0B9CB61562996E00B111CB /* Build configuration list for PBXNativeTarget "libEasyBinding" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D0B9CB41562996E00B111CB /* Debug */,
+				7D0B9CB51562996E00B111CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
