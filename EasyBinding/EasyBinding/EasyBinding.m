@@ -617,6 +617,11 @@ NSKeyValueObservingOptions const ESBindingOptions = NSKeyValueObservingOptionNew
 					[invoke setArgument:&changeInfo atIndex:2];
 					[invoke invokeWithTarget:bindObject];
 					break;
+				case 2:
+					[invoke setArgument:&boundObject atIndex:3];
+					[invoke setArgument:&changeInfo atIndex:3];
+					[invoke invokeWithTarget:bindObject];
+					break;
 				default:
 					[invoke setArgument:&bindObject atIndex:2];
 					[invoke setArgument:&boundObject atIndex:3];
